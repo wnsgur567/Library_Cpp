@@ -12,7 +12,7 @@ namespace cha
 		using pointer = T*;
 		using element_type = T;
 
-		//nullptrÇÏ³ª¸¸ ¹ŞÀ» ¼ö ÀÖ´Â »ó¼ö Å¸ÀÔ = nullptr_t
+		//nullptrí•˜ë‚˜ë§Œ ë°›ì„ ìˆ˜ ìˆëŠ” ìƒìˆ˜ íƒ€ì… = nullptr_t
 		unique_ptr() :data(nullptr) {}
 		unique_ptr(nullptr_t) :data(nullptr) {}
 		unique_ptr& operator = (nullptr_t)
@@ -21,12 +21,12 @@ namespace cha
 			return *this;
 		}
 
-		//_Unique_ptr_enable_default_t ,_Zero_then_variadic_args_t ¾îµğ´Ù ¾²´Â °ÇÁö ¸ğ¸£°ÚÀ½
+		//_Unique_ptr_enable_default_t ,_Zero_then_variadic_args_t ì–´ë””ë‹¤ ì“°ëŠ” ê±´ì§€ ëª¨ë¥´ê² ìŒ
 		explicit unique_ptr(pointer _Ptr) :data(_Ptr) {}
 		unique_ptr(unique_ptr&& _Right) :data(_Right.release()) {}
 		unique_ptr& operator=(unique_ptr&& _Right)
 		{
-			//ÀÚ±â ÀÚ½ÅÀÌ ¾Æ´Ò °æ¿ì¿¡¸¸ ¼öÇà
+			//ìê¸° ìì‹ ì´ ì•„ë‹ ê²½ìš°ì—ë§Œ ìˆ˜í–‰
 			if (this != std::addressof(_Right))
 			{
 				reset(_Right.release());
@@ -47,20 +47,20 @@ namespace cha
 
 	public:
 
-		//data¸¦ _Ptr(±âº» nullptr)·Î
-		//delete¼öÇàÀ» ÇÏ´Â µí...?
+		//dataë¥¼ _Ptr(ê¸°ë³¸ nullptr)ë¡œ
+		//deleteìˆ˜í–‰ì„ í•˜ëŠ” ë“¯...?
 		void reset(pointer _Ptr = pointer())
 		{
 			pointer _Old = std::exchange(data, _Ptr);
 			if (_Old)
 			{
-				//deleter ¸¦ operator()(_Old)È£Ãâ
+				//deleter ë¥¼ operator()(_Old)í˜¸ì¶œ
 				delete _Old;
 			}
 		}
 
-		//data¸¦ nullptr·Î
-		//delete´Â ¾ÈÇÔ
+		//dataë¥¼ nullptrë¡œ
+		//deleteëŠ” ì•ˆí•¨
 		pointer release()
 		{
 			return std::exchange(data, pointer());
@@ -93,9 +93,9 @@ namespace cha
 		unique_ptr& operator=(const unique_ptr&) = delete;
 
 	private:
-		// unique_ptrÀº _Mypair¶ó´Â °´Ã¼¸¦ °¡Áö´Âµ¥ std::pair¿Í ºñ½ÁÇÕ´Ï´Ù.
-		// first¿¡´Â _Dx. Áï deleter ÇÔ¼ö °´Ã¼¸¦ ÀúÀåÇÕ´Ï´Ù.
-		// second¿¡´Â ÀúÀåÇÏ°í ÀÖ´Â Æ÷ÀÎÅÍ °´Ã¼¸¦ ÀúÀåÇÕ´Ï´Ù. 
+		// unique_ptrì€ _Mypairë¼ëŠ” ê°ì²´ë¥¼ ê°€ì§€ëŠ”ë° std::pairì™€ ë¹„ìŠ·í•©ë‹ˆë‹¤.
+		// firstì—ëŠ” _Dx. ì¦‰ deleter í•¨ìˆ˜ ê°ì²´ë¥¼ ì €ì¥í•©ë‹ˆë‹¤.
+		// secondì—ëŠ” ì €ì¥í•˜ê³  ìˆëŠ” í¬ì¸í„° ê°ì²´ë¥¼ ì €ì¥í•©ë‹ˆë‹¤. 
 		//_Compressed_pair<_Dx, pointer> _Mypair;
 
 		T* data;
