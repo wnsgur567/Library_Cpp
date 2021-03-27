@@ -17,6 +17,13 @@
 )\
 ? true : false
 
+#define IS_NULL_CONST(ptr,non_const_type) \
+(\
+((ptr) == nullptr) || \
+((ptr) == reinterpret_cast<void*>(DELETED)) || \
+(( *( reinterpret_cast<unsigned int*>(  const_cast<non_const_type> (ptr) ) )) == (DELETED_REF))\
+)\
+? true : false
 
 using namespace std;
 
