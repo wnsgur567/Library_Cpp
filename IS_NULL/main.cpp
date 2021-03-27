@@ -36,14 +36,7 @@ public:
 public:
 	ListNode() :next(nullptr), value(T()) {}
 	ListNode(T _value) : next(nullptr), value(_value)
-	{}
-
-	// 지워졌는지 확인할 때만 사용
-	bool operator == (const int& is_deleted)
-	{
-		assert(is_deleted == DELETED);
-		return false;
-	}
+	{}	
 
 	template<typename T>
 	friend std::ostream& operator<<(std::ostream& os, const ListNode<T>& _node);
@@ -64,10 +57,10 @@ void Test4();
 
 int main()
 {
-	//Test1();
-	//Test2();
-	//Test3();
-	//Test4();
+	Test1();
+	Test2();
+	Test3();
+	Test4();
 }
 
 //*data == NULL;
